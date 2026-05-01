@@ -20,13 +20,15 @@ if (menuBtn && nav) {
 }
 
 /* HEADER SCROLL EFFECT */
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 40) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
-});
+if (header) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 40) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+}
 
 /* REVEAL ON SCROLL */
 const revealElements = document.querySelectorAll(
@@ -41,9 +43,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  {
-    threshold: 0.15
-  }
+  { threshold: 0.15 }
 );
 
 revealElements.forEach(el => {
@@ -51,29 +51,9 @@ revealElements.forEach(el => {
   observer.observe(el);
 });
 
-/* OPTIONAL FORM SUCCESS MESSAGE (works with Netlify Forms) */
-const form = document.querySelector(".contact-form");
-const formMessage = document.getElementById("formMessage");
-
-if (form && formMessage) {
-  form.addEventListener("submit", () => {
-    formMessage.textContent = "Sending message...";
-    formMessage.className = "form-message sending";
-  });
-}
-
-/* AFTER PAGE LOAD WITH SUCCESS PARAM */
-const params = new URLSearchParams(window.location.search);
-
-if (params.get("success") === "true" && formMessage) {
-  formMessage.textContent =
-    "Thank you! Your message has been sent successfully.";
-  formMessage.className = "form-message success";
-}
-
-/* SMOOTH CLOSE MENU ON RESIZE */
+/* CLOSE MOBILE MENU ON RESIZE */
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 760) {
+  if (window.innerWidth > 760 && menuBtn && nav) {
     menuBtn.classList.remove("active");
     nav.classList.remove("active");
     document.body.classList.remove("menu-open");
